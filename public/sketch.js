@@ -1,8 +1,9 @@
 var socket;
 function setup() {
   createCanvas(400, 400);
-  const PORT = process.env.PORT || 3000;
-  socket= io.connect(PORT)
+  //require('dotenv').config();
+  //const PORT = process.env.PORT || 3000;
+  socket= io.connect("https://incantation1.herokuapp.com/")
   socket.on('mouse', newDrawing);
 }
 
