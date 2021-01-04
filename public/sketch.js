@@ -1,7 +1,8 @@
 var socket;
 function setup() {
   createCanvas(400, 400);
-  socket= io.connect('http://localhost:3000')
+  const PORT = process.env.PORT || 3000;
+  socket= io.connect(PORT)
   socket.on('mouse', newDrawing);
 }
 
