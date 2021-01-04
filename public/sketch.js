@@ -1,39 +1,39 @@
 var socket;
 var sounder;
+
+function preload(){
+
+  sounder=new Audio ("1.mp3")
+}
 function setup() {
   createCanvas(400, 400);
-  //require('dotenv').config();
-  //const PORT = process.env.PORT || 3000;
+  
   socket= io.connect("https://incantation1.herokuapp.com/")
+  //socket= io.connect('http://localhost:3000')
   socket.on('mouse', newDrawing);
-  socket.on('mouseoff', newDrawing);
-  sounder=loadSound("1.mp3");
 }
 
-function newDrawing(data, data1){
+function newDrawing(data){
 fill(255);
 ellipse(data.x, data.y, 10,10)
-if(data.player==true&&!sounder.isPlaying()){
+if(data.x>200){
+  background(255);
   sounder.play();
 }
 }
-function mouseDragged(){
 
+function mouseDragged(){
   fill(255);
   ellipse(random(width), random(height), 10,10)
   ellipse(mouseX, mouseY, 10,10)
+  
   var data = {
 		x: mouseX,
-    y: mouseY,
-    player: true
+    y: mouseY
   }
+  
   socket.emit('mouse', data)
 }
-
-// function mouseReleased(){
-//     data.player==false;
-//   socket.emit('mouse', data.player)
-// }
 
 function draw() {
   background(0,10);
