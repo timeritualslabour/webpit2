@@ -1,9 +1,10 @@
 console.log('My socket server is running');
 var express = require('express');
 var app= express();
-require('dotenv').config();
-const port = process.env.PORT || 3000;
-var server = app.listen(port);
+require('dotenv').config()
+console.log(process.env)
+const port = process.env.PORT || 3000
+var server = app.listen(process.env.PORT || 3000)
 
 app.use(express.static('public'));
 
