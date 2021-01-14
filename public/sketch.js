@@ -14,18 +14,28 @@ function setup() {
 }
 
 function newDrawing(data){
-fill(255);
-ellipse(data.x, data.y, 10,10)
-if(data.x>200){
-  background(255);
-  sounder.play();
+fill(255,100);
+ellipse(data.x, data.y, 2,2)
+// if(data.x>200){
+//   background(255);
+//   sounder.play();
+// }
+stroke(255);
+var dis=dist(data.x, data.y, x, y);
+if(dis<30){
+  line(data.x, data.y, x, y);
 }
 }
 
 function mouseDragged(){
+  
+}
+
+function draw() {
+  background(0,10);
   fill(255);
-  ellipse(random(width), random(height), 10,10)
-  ellipse(mouseX, mouseY, 10,10)
+  //ellipse(random(width), random(height), 10,10)
+  ellipse(mouseX, mouseY, 2,2)
   
   var data = {
 		x: mouseX,
@@ -33,8 +43,4 @@ function mouseDragged(){
   }
   
   socket.emit('mouse', data)
-}
-
-function draw() {
-  background(0,10);
 }
