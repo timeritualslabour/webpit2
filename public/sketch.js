@@ -6,7 +6,7 @@ function preload(){
   sounder=new Audio ("1.mp3")
 }
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(windowWidth, windowHeight);
   
   socket= io.connect("https://incantation1.herokuapp.com/")
   //socket= io.connect('http://localhost:3000')
@@ -14,7 +14,7 @@ function setup() {
 }
 
 function newDrawing(data){
-fill(255,100);
+fill(255);
 ellipse(data.x, data.y, 2,2)
 // if(data.x>200){
 //   background(255);
