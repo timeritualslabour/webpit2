@@ -11,8 +11,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   w=windowWidth;
   h=windowHeight;
-  socket= io.connect("https://incantation1.herokuapp.com/")
-  //socket= io.connect('http://localhost:3000')
+  //socket= io.connect("https://incantation1.herokuapp.com/")
+  socket= io.connect('http://localhost:3000')
   socket.on('mouse', newDrawing);
 }
 
@@ -42,6 +42,11 @@ textSize(20);
 text('someone',data.x, data.y);
 ellipse(data.x, data.y, 2,2)
 var dis1=dist(data.x, data.y, mouseX, mouseY);
+var dis2=dist(data.x, data.y, data.x, data.y);
+if(dis2<100&&dis2>0){
+  line(data.x, data.y, data.x, data.y);
+}
+
 if(dis1<100){
   line(data.x, data.y, mouseX, mouseY);
 }
