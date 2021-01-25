@@ -30,11 +30,13 @@ function setup() {
 function draw() {
   background(0,20);
   fill(255);
-stroke(255);
+
+noStroke();
 textSize(10);
 //var l1=lerp(l1, )
 text('you',mouseX, mouseY);
   //ellipse(mouseX, mouseY, 2,2);
+  stroke(255);
   var dis=dist(w/2, h/2, mouseX, mouseY);
 if(dis<100){
   line(w/2, h/2, mouseX, mouseY);
@@ -88,19 +90,17 @@ class Bunch {
 
   move(xnew, ynew) {
     this.pos.set(xnew, ynew);
-    fill(255);
-      stroke(255);
-      textSize(5);
   }
 
     display(){
       fill(255);
-      stroke(255);
+      noStroke();
       textSize(10);
       
       this.l = p5.Vector.lerp(this.l, this.pos, 0.5);
       text('other', this.l.x, this.l.y);
       this.dis1=dist(this.l.x, this.l.y, mouseX, mouseY);
+      stroke(255);
 if(this.dis1<200){
 line(this.l.x, this.l.y, mouseX, mouseY);
 }
