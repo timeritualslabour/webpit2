@@ -13,8 +13,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   w=windowWidth;
   h=windowHeight;
-  //socket= io.connect("https://incantation1.herokuapp.com/")
-  socket= io.connect('http://localhost:3000')
+  socket= io.connect("https://incantation1.herokuapp.com/")
+  //socket= io.connect('http://localhost:3000')
   socket.on('mouse', newDrawing);
   old=false;
   time=0;
