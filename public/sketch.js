@@ -96,7 +96,7 @@ class Bunch {
     display(){
       fill(255);
       stroke(255);
-      textSize(5);
+      textSize(10);
       
       this.l = p5.Vector.lerp(this.l, this.pos, 0.5);
       text('other', this.l.x, this.l.y);
