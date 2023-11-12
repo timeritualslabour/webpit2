@@ -9,15 +9,25 @@ var bunch = [];
 var old;
 let time;
 var l;
+var ref;
+let poem=[];
+let users;
+var myname;
+var changerf;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   w=windowWidth;
   h=windowHeight;
-  socket= io.connect("https://incantation1.herokuapp.com/")
-  //socket= io.connect('http://localhost:3000')
+  poem=loadStrings('text.txt');
+  //socket= io.connect("https://incantation1.herokuapp.com/")
+  socket= io.connect('http://192.168.0.103:3000')
   socket.on('mouse', newDrawing);
+  socket.on('change', changer1);
+  //socket.once('name', namer1);
   old=false;
   time=0;
+  myname=int(random(0,10));
   //socket.on('name', adder)
 }
 // function adder(namer) {
@@ -28,19 +38,23 @@ function setup() {
 
 //}
 function draw() {
-  background(0,20);
-  fill(255);
 
-noStroke();
-textSize(10);
-//var l1=lerp(l1, )
-text('you',mouseX, mouseY);
+  
+  background(0);
+  
+  fill(255);
+textSize(30);
+text(poem[myname],mouseX, mouseY);
+
+// noStroke();
+// textSize(30);
+// text(poem[0],mouseX, mouseY);
   //ellipse(mouseX, mouseY, 2,2);
-  stroke(255);
-  var dis=dist(w/2, h/2, mouseX, mouseY);
-if(dis<100){
-  line(w/2, h/2, mouseX, mouseY);
-}
+  //stroke(255);
+  //var dis=dist(w/2, h/2, mouseX, mouseY);
+// if(dis<100){
+//   line(w/2, h/2, mouseX, mouseY);
+// }
 for(k=0; k<bunch.length; k++){
 bunch[k].display();
 
@@ -49,33 +63,44 @@ if(millis()-time>100){
 var data = {
 		x: mouseX,
     y: mouseY, 
-    s: socket.id
+    s: myname
   }
-  
+
   socket.emit('mouse', data);
   time=millis();
 }
 }
 
-function newDrawing(data){
-   //var ider=data.s;
+function changer1(changer){
+  changerf=changer;
+if(changerf==1){
+shuffle(poem,true);
+changerf=0;
+}
+}
+
+function newDrawing(dater){
+if(socket.id===dater.s){
+  ref2=dater.place;
+}
+if(socket.id!==dater.s){
    old=false;
 for(i=0; i<bunch.length; i++){
-  if(data.s===bunch[i].id){
+  if(dater.s===bunch[i].id){
   old=true;
-  bunch[i].move(data.x, data.y);
-  for(z=0; z<bunch.length; z++){
-    if(bunch[i].intersect(bunch[z])&&bunch[k]!==bunch[z]){
-  bunch[i].check(bunch[z]);
-    }
-  }
+  bunch[i].move(dater.x, dater.y);
+  // for(z=0; z<bunch.length; z++){
+  //   if(bunch[i].intersect(bunch[z])&&bunch[k]!==bunch[z]){
+  // bunch[i].check(bunch[z]);
+  //   }
+  // }
 }
 }
 
 if(old==false){
-  bunch.push(new Bunch(data.s));
+  bunch.push(new Bunch(dater.s));
 }
-
+}
 }
 
 class Bunch {
@@ -83,6 +108,7 @@ class Bunch {
   constructor(s) {
     this.pos = createVector(0,0);
     this.id=s;
+    //this.place=p
     this.l=createVector(0,0);
     this.dis1=0;
     this.dis2=0;
@@ -95,27 +121,27 @@ class Bunch {
     display(){
       fill(255);
       noStroke();
-      textSize(10);
+      textSize(30);
       
-      this.l = p5.Vector.lerp(this.l, this.pos, 0.5);
-      text('other', this.l.x, this.l.y);
-      this.dis1=dist(this.l.x, this.l.y, mouseX, mouseY);
-      stroke(255);
-if(this.dis1<200){
-line(this.l.x, this.l.y, mouseX, mouseY);
-}
+      //this.l = p5.Vector.lerp(this.l, this.pos, 0.5);
+      text(poem[this.id], this.pos.x, this.pos.y);
+      // this.dis1=dist(this.l.x, this.l.y, mouseX, mouseY);
+      // stroke(255);
+// if(this.dis1<200){
+// line(this.l.x, this.l.y, mouseX, mouseY);
+// }
     }
     
-    intersect(other){
-    this.dis2=dist(this.l.x, this.l.y, other.l.x, other.l.y);
-    return(this.dis2<200);
-    }
+    // intersect(other){
+    // this.dis2=dist(this.l.x, this.l.y, other.l.x, other.l.y);
+    // return(this.dis2<200);
+    // }
     
-    check(other){
-        stroke(255);
-        strokeWeight(2);
-        line(this.l.x, this.l.y, other.l.x, other.l.y);
-  }
+  //   check(other){
+  //       stroke(255);
+  //       strokeWeight(2);
+  //       line(this.l.x, this.l.y, other.l.x, other.l.y);
+  // }
 
   
 }
